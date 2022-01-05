@@ -67,8 +67,6 @@ public class SlackPostProjectAnalysisTask extends AbstractSlackNotifyingComponen
             return;
         }
 
-
-        // final var projectConfig =
         ProjectConfig projectConfig = projectConfigOptional.get();
         String targetBranch = getTargetBranch(projectConfig);
         String builtBranch = context.getProjectAnalysis().getBranch().map(b -> b.getName()).orElse(Optional.of("")).get();
@@ -76,7 +74,7 @@ public class SlackPostProjectAnalysisTask extends AbstractSlackNotifyingComponen
         LOG.info("Project Key : {}", projectConfig.getProjectKey());
         LOG.info("targetBranch- {}  / builtBranch {}", targetBranch, builtBranch);
         if(StringUtils.isNotBlank(targetBranch) && !StringUtils.equals(targetBranch, builtBranch)) {
-            LOG.info("Branch doesn match, returing ...");
+            LOG.info("Branch doesn't match, returing ...");
             return;
         }
 

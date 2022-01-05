@@ -95,20 +95,20 @@ class ProjectAnalysisPayloadBuilder {
         assertNotNull(i18n, "i18n");
         assertNotNull(analysis, "analysis");
 
-        final String notifyPrefix = isNotBlank(projectConfig.getNotify()) ? format("<!%s> ", projectConfig.getNotify()) : "";
+        final String notifyPrefix =
+            isNotBlank(projectConfig.getNotify()) && !Objects.equals(projectConfig.getNotify(), "SonarQube") ?
+                format("<%s> ", projectConfig.getNotify()) : "";
 
         final QualityGate qualityGate = analysis.getQualityGate();
         final StringBuilder shortText = new StringBuilder();
         shortText.append(notifyPrefix);
-        shortText.append(format("Project [%s] analyzed", analysis.getProject().getName()));
+        shortText.append(format("Project <%s|%s> analyzed", projectUrl, analysis.getProject().getName()));
 
         final Optional<Branch> branch = analysis.getBranch();
         if (branch.isPresent() && !branch.get().isMain() && this.includeBranch) {
             shortText.append(format(" for branch [%s]", branch.get().getName().orElse("")));
         }
-        shortText.append(". ");
-        shortText.append(format("See %s", projectUrl));
-        shortText.append(qualityGate == null ? "." : format(". Quality gate status: %s", qualityGate.getStatus()));
+        shortText.append(qualityGate == null ? "." : format(".%nQuality gate status: %s", qualityGate.getStatus()));
 
         final Payload.PayloadBuilder builder = Payload.builder()
             .channel(projectConfig.getSlackChannel())

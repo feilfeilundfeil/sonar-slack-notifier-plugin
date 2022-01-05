@@ -5,8 +5,6 @@ import com.koant.sonar.slacknotifier.common.SlackNotifierProp;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
@@ -37,7 +35,7 @@ public class SlackPostProjectAnalysisTaskTest {
 
     private SlackHttpClient httpClient;
 
-    private Settings settings;
+    private MapSettings settings;
     private I18n     i18n;
 
     @Before

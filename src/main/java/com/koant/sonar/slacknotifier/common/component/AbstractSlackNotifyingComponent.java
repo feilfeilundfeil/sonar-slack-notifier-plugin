@@ -140,8 +140,7 @@ public abstract class AbstractSlackNotifyingComponent {
         List<ProjectConfig> list = new ArrayList<>();
         Map<String, ProjectConfig> stringProjectConfigMap = this.projectConfigMap;
         for (String s : this.projectConfigMap.keySet()) {
-            //if (projectKey.matches(s)) {
-            if (StringUtils.contains(s, projectKey)) {
+            if (projectKey.matches(s)) {
                 ProjectConfig projectConfig = stringProjectConfigMap.get(s);
                 list.add(projectConfig);
             }

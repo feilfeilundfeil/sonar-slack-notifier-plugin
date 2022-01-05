@@ -1,7 +1,8 @@
 # Warning
 
-This project is a fork of the original work from https://github.com/kogitant/sonar-slack-notifier-plugin.
-I made modifications to keep it working for the latest versions of SonarQube.
+This project is a fork of a fork of the original work from https://github.com/kogitant/sonar-slack-notifier-plugin.
+
+This project is not intended to be maintained for public.
 
 ## Pre-requisites
 

@@ -1,5 +1,6 @@
 package com.koant.sonar.slacknotifier.extension.task;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -119,8 +120,8 @@ public class ProjectAnalysisPayloadBuilderTest {
                 .color("good")
                 .build());
         return Payload.builder()
-                .text("Project [Sonar Project Name] analyzed. See "
-                    + "http://localhist:9000/dashboard?id=project:key. Quality gate status: OK")
+                .text("Project <http://localhist:9000/dashboard?id=project:key|Sonar Project Name> analyzed."
+                    + format("%nQuality gate status: OK"))
                 .channel("#channel")
                 .username("CKSSlackNotifier")
                 .attachments(attachments)
@@ -193,9 +194,12 @@ public class ProjectAnalysisPayloadBuilderTest {
             .projectUrl("http://localhost:9000/dashboard?id=project:key")
             .username("CKSSlackNotifier")
             .build();
-        Assert.assertEquals(String.format("<!%s> Project [Sonar Project Name] analyzed. See " +
-                                              "http://localhost:9000/dashboard?id=project:key.",
-            notify), payload.getText());
+        Assert.assertEquals(
+            format(
+                "<%s> Project <http://localhost:9000/dashboard?id=project:key|Sonar Project Name> analyzed.", notify
+            ),
+            payload.getText()
+        );
     }
 
     @Test
@@ -213,8 +217,10 @@ public class ProjectAnalysisPayloadBuilderTest {
             .username("CKSSlackNotifier")
             .includeBranch(true)
             .build();
-        Assert.assertEquals("Project [Sonar Project Name] analyzed. See " +
-                                "http://localhost:9000/dashboard?id=project:key.", payload.getText());
+        Assert.assertEquals(
+            "Project <http://localhost:9000/dashboard?id=project:key|Sonar Project Name> analyzed.",
+            payload.getText()
+        );
     }
 
     @Test
@@ -230,7 +236,7 @@ public class ProjectAnalysisPayloadBuilderTest {
             .username("CKSSlackNotifier")
             .includeBranch(true)
             .build();
-        Assert.assertEquals(String.format("Project [Sonar Project Name] analyzed for branch [%s]. See http://localhost:9000/dashboard?id=project:key.",
+        Assert.assertEquals(format("Project <http://localhost:9000/dashboard?id=project:key|Sonar Project Name> analyzed for branch [%s].",
             branchName), payload.getText());
     }
 
@@ -246,7 +252,7 @@ public class ProjectAnalysisPayloadBuilderTest {
             .username("CKSSlackNotifier")
             .includeBranch(true)
             .build();
-        Assert.assertEquals("Project [Sonar Project Name] analyzed. See http://localhost:9000/dashboard?id=project:key. Quality gate status: OK", payload.getText());
+        Assert.assertEquals(format("Project <http://localhost:9000/dashboard?id=project:key|Sonar Project Name> analyzed.%nQuality gate status: OK"), payload.getText());
     }
 
     private Branch newBranch(final String name, final boolean isMain) {
@@ -268,7 +274,7 @@ public class ProjectAnalysisPayloadBuilderTest {
                   @Override
                   public Type getType() {
 
-                      return Type.SHORT;
+                      return Type.BRANCH;
                   }
               };
     }

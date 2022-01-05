@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.byoskill.sonar.slack</groupId>
   <artifactId>sonar-slack-notifier</artifactId>
-  <version>8.0.0-beta</version>
+  <version>9.0.0-beta</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar Slack Notifier Plugin</name>
@@ -24,16 +24,10 @@
 
     <!-- JaCoCo support -->
     <argLine />
-    <sonar.version>8.0</sonar.version>
-    <jackson-databind.version>2.10.1</jackson-databind.version>
+    <sonar.version>9.2.3.50713</sonar.version>
+    <jackson-databind.version>2.13.1</jackson-databind.version>
   </properties>
 
-  <scm>
-    <connection>scm:git:git@github.com:sleroy/sonar-slack-notifier-plugin.git</connection>
-    <url>scm:git:git@github.com:sleroy/sonar-slack-notifier-plugin.git</url>
-    <developerConnection>scm:git:git@github.com:sleroy/sonar-slack-notifier-plugin.git</developerConnection>
-  </scm>
-  
 
   <dependencies>
     <!-- Dependencies provided by SonarQube server -->
@@ -47,19 +41,19 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.9</version>
+      <version>3.12.0</version>
     </dependency>
 
     <!-- Dependencies of this plugin, not provided by SonarQube -->
     <dependency>
       <groupId>com.github.seratch</groupId>
       <artifactId>jslack</artifactId>
-      <version>3.3.0</version>
+      <version>3.4.2</version>
     </dependency>
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
-      <version>4.2.2</version>
+      <version>4.9.3</version>
     </dependency>
 
 
@@ -67,19 +61,19 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.14.0</version>
+      <version>3.21.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>3.2.4</version>
+      <version>4.2.0</version>
       <scope>compile</scope>
     </dependency>
 
@@ -93,7 +87,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.10</version>
+      <version>1.18.22</version>
     </dependency>
 
 
@@ -129,12 +123,12 @@
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.7.0.1746</version>
+        <version>3.9.1.2184</version>
       </plugin>
       <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <version>1.18.0.372</version>
+        <version>1.21.0.505</version>
         <extensions>true</extensions>
         <configuration>
           <jarName>sonar-slack-notifier-${project.version}</jarName>
