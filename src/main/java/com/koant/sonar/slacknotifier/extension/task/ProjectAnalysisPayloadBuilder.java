@@ -7,7 +7,6 @@ import com.koant.sonar.slacknotifier.common.component.ProjectConfig;
 import org.sonar.api.ce.posttask.Branch;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
 import org.sonar.api.ce.posttask.QualityGate;
-import org.sonar.api.i18n.I18n;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -23,7 +22,6 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * Created by ak on 18/10/16.
  * Modified by poznachowski
  */
-
 class ProjectAnalysisPayloadBuilder {
     private static final Logger LOG = Loggers.get(ProjectAnalysisPayloadBuilder.class);
 
@@ -40,7 +38,6 @@ class ProjectAnalysisPayloadBuilder {
 
     private final PostProjectAnalysisTask.ProjectAnalysis analysis;
     private final DecimalFormat percentageFormat;
-    private I18n i18n;
     private ProjectConfig projectConfig;
     private String iconUrl;
     private String slackUser;
@@ -60,11 +57,6 @@ class ProjectAnalysisPayloadBuilder {
 
     ProjectAnalysisPayloadBuilder projectConfig(final ProjectConfig projectConfig) {
         this.projectConfig = projectConfig;
-        return this;
-    }
-
-    ProjectAnalysisPayloadBuilder i18n(final I18n i18n) {
-        this.i18n = i18n;
         return this;
     }
 
@@ -92,7 +84,6 @@ class ProjectAnalysisPayloadBuilder {
         assertNotNull(projectConfig, "projectConfig");
         assertNotNull(projectUrl, "projectUrl");
         assertNotNull(slackUser, "slackUser");
-        assertNotNull(i18n, "i18n");
         assertNotNull(analysis, "analysis");
 
         final String notifyPrefix =
@@ -157,8 +148,7 @@ class ProjectAnalysisPayloadBuilder {
      * @return
      */
     private Field translate(final QualityGate.Condition condition) {
-        final String i18nKey = "metric." + condition.getMetricKey() + ".name";
-        final String conditionName = i18n.message(Locale.ENGLISH, i18nKey, condition.getMetricKey());
+        final String conditionName = condition.getMetricKey();
 
         if (QualityGate.EvaluationStatus.NO_VALUE.equals(condition.getStatus())) {
             // No value for given metric

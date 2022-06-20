@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.VisibleForTesting;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.i18n.I18n;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -22,13 +21,11 @@ public class SlackPostProjectAnalysisTask extends AbstractSlackNotifyingComponen
 
     private static final Logger LOG = Loggers.get(SlackPostProjectAnalysisTask.class);
 
-    private final I18n i18n;
     private final SlackHttpClient httpClient;
 
     @VisibleForTesting
-    SlackPostProjectAnalysisTask(final SlackHttpClient httpClient, final Configuration settings, final I18n i18n) {
+    SlackPostProjectAnalysisTask(final SlackHttpClient httpClient, final Configuration settings) {
         super(settings);
-        this.i18n = i18n;
         this.httpClient = httpClient;
     }
 
@@ -36,11 +33,9 @@ public class SlackPostProjectAnalysisTask extends AbstractSlackNotifyingComponen
      * Default constructor invoked by SonarQube.
      *
      * @param settings
-     * @param i18n
      */
-    public SlackPostProjectAnalysisTask(final Configuration settings, final I18n i18n) {
+    public SlackPostProjectAnalysisTask(final Configuration settings) {
         super(settings);
-        this.i18n = i18n;
         httpClient = new SlackHttpClient(settings);
 
     }
@@ -89,7 +84,6 @@ public class SlackPostProjectAnalysisTask extends AbstractSlackNotifyingComponen
 
         //final var payload =
         Payload payload = ProjectAnalysisPayloadBuilder.of(analysis)
-            .i18n(this.i18n)
             .projectConfig(projectConfig)
             .projectUrl(this.projectUrl(projectKey))
             .includeBranch(this.isBranchEnabled())

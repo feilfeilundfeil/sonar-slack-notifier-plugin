@@ -8,10 +8,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
-import org.sonar.api.config.Settings;
 import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.config.internal.MapSettings;
-import org.sonar.api.i18n.I18n;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -36,7 +34,6 @@ public class SlackPostProjectAnalysisTaskTest {
     private SlackHttpClient httpClient;
 
     private MapSettings settings;
-    private I18n     i18n;
 
     @Before
     public void before() throws IOException {
@@ -57,15 +54,8 @@ public class SlackPostProjectAnalysisTaskTest {
         this.settings.setProperty(CONFIG.property() + "." + PROJECT_KEY + "." + QG_FAIL_ONLY.property(), "false");
         this.settings.setProperty("sonar.core.serverBaseURL", "http://your.sonar.com/");
         this.httpClient = mock(SlackHttpClient.class);
-        this.i18n = mock(I18n.class);
-        when(this.i18n.message(ArgumentMatchers.any(Locale.class), anyString(), anyString())).thenAnswer(new Answer<String>() {
-            @Override
-            public String answer(final InvocationOnMock invocation) throws Throwable {
-                return (String) invocation.getArguments()[2];
-            }
-        });
 
-        this.task = new SlackPostProjectAnalysisTask(this.httpClient, new ConfigurationBridge(this.settings), this.i18n);
+        this.task = new SlackPostProjectAnalysisTask(this.httpClient, new ConfigurationBridge(this.settings));
     }
 
     @Test
